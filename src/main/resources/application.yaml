@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: api-performance-monitor
+
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+    prometheus:
+      enabled: true
+  metrics:
+    distribution:
+      percentiles:
+        http.server.requests: 0.5, 0.99, 0.995
+      percentiles-histogram:
+        http.server.requests: true
+      slo:
+        http.server.requests: 50ms, 100ms, 200ms, 500ms, 1s
+    tags:
+      application: ${spring.application.name}
+
+logging:
+  level:
+    com.example.apiperformancemonitor: INFO
