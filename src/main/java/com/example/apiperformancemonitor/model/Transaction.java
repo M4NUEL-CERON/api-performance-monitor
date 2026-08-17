@@ -1,22 +1,38 @@
 package com.example.apiperformancemonitor.model;
 
+import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "transactions")
 public class Transaction {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String type;       // CREDIT | DEBIT
+
+    @Column(nullable = false)
+    private String type;
+
+    @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal amount;
+
+    @Column(nullable = false, length = 3)
     private String currency;
-    private String status;     // PENDING | COMPLETED | FAILED
+
+    @Column(nullable = false)
+    private String status;
+
     private String description;
+
+    @Column(name = "timestamp")
     private LocalDateTime timestamp;
 
     public Transaction() {}
 
-    public Transaction(Long id, String type, BigDecimal amount, String currency,
+    public Transaction(String type, BigDecimal amount, String currency,
                        String status, String description, LocalDateTime timestamp) {
-        this.id = id;
         this.type = type;
         this.amount = amount;
         this.currency = currency;

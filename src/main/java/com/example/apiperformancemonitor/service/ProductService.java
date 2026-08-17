@@ -1,96 +1,63 @@
 package com.example.apiperformancemonitor.service;
 
 import com.example.apiperformancemonitor.model.Product;
-import jakarta.annotation.PostConstruct;
+import com.example.apiperformancemonitor.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 public class ProductService {
 
-    private final Map<Long, Product> store = new ConcurrentHashMap<>();
-    private final AtomicLong idCounter = new AtomicLong(1);
+    private final ProductRepository repository;
     private final Random random = new Random();
 
-    @PostConstruct
-    public void seed() {
-        Object[][] data = {
-            {"Laptop Pro", "Electronics", "1299.99", 50},
-            {"Wireless Mouse", "Electronics", "29.99", 200},
-            {"Mechanical Keyboard", "Electronics", "89.99", 150},
-            {"4K Monitor", "Electronics", "549.99", 75},
-            {"USB-C Hub", "Electronics", "49.99", 300},
-            {"Standing Desk", "Furniture", "599.99", 30},
-            {"Ergonomic Chair", "Furniture", "399.99", 45},
-            {"Webcam HD", "Electronics", "79.99", 120},
-            {"Noise Cancelling Headphones", "Electronics", "249.99", 80},
-            {"LED Desk Lamp", "Furniture", "39.99", 250}
-        };
-        for (Object[] row : data) {
-            long id = idCounter.getAndIncrement();
-            store.put(id, new Product(id, (String) row[0], (String) row[1],
-                new BigDecimal((String) row[2]), (Integer) row[3], LocalDateTime.now()));
-        }
+    public ProductService(ProductRepository repository) {
+        this.repository = repository;
     }
 
-    // Simula un scan de tabla: 50–150 ms normalmente
     public List<Product> findAll() {
-        simulateLatency(50, 150);
-        return new ArrayList<>(store.values());
+        return repository.findAll();
     }
 
-    // Simula un lookup por índice: 5–20 ms
     public Optional<Product> findById(Long id) {
-        simulateLatency(5, 20);
-        return Optional.ofNullable(store.get(id));
+        return repository.findById(id);
     }
 
-    // Simula un INSERT: 10–30 ms
     public Product create(Product product) {
-        simulateLatency(10, 30);
-        long id = idCounter.getAndIncrement();
-        product.setId(id);
+        product.setId(null);
         product.setCreatedAt(LocalDateTime.now());
-        store.put(id, product);
-        return product;
+        return repository.save(product);
     }
 
-    // Simula un UPDATE: 10–30 ms
     public Optional<Product> update(Long id, Product updated) {
-        simulateLatency(10, 30);
-        return Optional.ofNullable(store.computeIfPresent(id, (k, existing) -> {
+        return repository.findById(id).map(existing -> {
             existing.setName(updated.getName());
             existing.setCategory(updated.getCategory());
             existing.setPrice(updated.getPrice());
             existing.setStock(updated.getStock());
-            return existing;
-        }));
+            return repository.save(existing);
+        });
     }
 
-    // Simula un DELETE: 5–15 ms
     public boolean delete(Long id) {
-        simulateLatency(5, 15);
-        return store.remove(id) != null;
+        if (!repository.existsById(id)) return false;
+        repository.deleteById(id);
+        return true;
     }
 
-    // Endpoint "pesado": 10% de los requests tardan 500–1500 ms → genera cola en p99/p99.5
+    // Endpoint pesado: 10% de requests generan latencia extrema → ver p99/p99.5 dispararse
     public Map<String, Object> getAnalytics() {
         if (random.nextInt(10) == 0) {
-            simulateLatency(500, 1500);
-        } else {
-            simulateLatency(100, 300);
+            simulateLatency(400, 900);
         }
 
-        Map<String, Object> result = new LinkedHashMap<>();
+        List<Product> all = repository.findAll();
+
         Map<String, Long> byCategory = new LinkedHashMap<>();
         Map<String, Double> sumByCategory = new LinkedHashMap<>();
-
-        store.values().forEach(p -> {
+        all.forEach(p -> {
             byCategory.merge(p.getCategory(), 1L, Long::sum);
             sumByCategory.merge(p.getCategory(), p.getPrice().doubleValue(), Double::sum);
         });
@@ -99,11 +66,12 @@ public class ProductService {
         sumByCategory.forEach((cat, sum) ->
             avgPriceByCategory.put(cat, Math.round((sum / byCategory.get(cat)) * 100.0) / 100.0));
 
-        double totalValue = store.values().stream()
+        double totalValue = all.stream()
             .mapToDouble(p -> p.getPrice().doubleValue() * p.getStock())
             .sum();
 
-        result.put("totalProducts", store.size());
+        Map<String, Object> result = new LinkedHashMap<>();
+        result.put("totalProducts", all.size());
         result.put("totalByCategory", byCategory);
         result.put("avgPriceByCategory", avgPriceByCategory);
         result.put("totalInventoryValue", Math.round(totalValue * 100.0) / 100.0);

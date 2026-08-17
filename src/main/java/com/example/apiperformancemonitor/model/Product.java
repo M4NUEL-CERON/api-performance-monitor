@@ -1,20 +1,35 @@
 package com.example.apiperformancemonitor.model;
 
+import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "products")
 public class Product {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
     private String category;
+
+    @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal price;
+
+    @Column(nullable = false)
     private Integer stock;
+
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     public Product() {}
 
-    public Product(Long id, String name, String category, BigDecimal price, Integer stock, LocalDateTime createdAt) {
-        this.id = id;
+    public Product(String name, String category, BigDecimal price, Integer stock, LocalDateTime createdAt) {
         this.name = name;
         this.category = category;
         this.price = price;
