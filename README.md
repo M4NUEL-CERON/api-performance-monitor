@@ -2,7 +2,9 @@
 
 A Spring Boot API that measures itself, plus a live dashboard to watch it happen. Press **Generate traffic**, and 400 real requests leave your browser. The server's own Micrometer timers turn them into requests/sec and p50 / p99 / p99.5 latency per endpoint, and the dashboard redraws every 2 seconds.
 
-**Live demo:** _dashboard and API links go here after deploy_
+**Live demo:** [api-performance-monitor-one.vercel.app](https://api-performance-monitor-one.vercel.app) · API: [`/api/metrics/summary`](https://api-performance-monitor-c75v.onrender.com/api/metrics/summary)
+
+> The API runs on Render's free tier and sleeps after 15 minutes idle; the first load can take 30–60 s while the JVM boots.
 
 ![Dashboard right after a Generate traffic run: RPS spike on the left, p99 of the two slow endpoints near 1 s](docs/dashboard-live.jpg)
 

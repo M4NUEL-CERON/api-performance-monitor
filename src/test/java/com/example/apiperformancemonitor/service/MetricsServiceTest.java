@@ -58,8 +58,10 @@ class MetricsServiceTest {
     }
 
     @Test
-    void excludesActuatorEndpoints() {
+    void excludesActuatorAndUnmatchedRoutes() {
         record("GET", "/actuator/prometheus", "200", 50, 1);
+        record("GET", "/**", "404", 20, 1);
+        record("HEAD", "UNKNOWN", "404", 5, 1);
         record("GET", "/api/products", "200", 1, 1);
 
         assertThat(service.getSummary().getEndpoints()).extracting(EndpointMetrics::getUri)

@@ -7,4 +7,4 @@ services:
     healthCheckPath: /actuator/health
     envVars:
       - key: CORS_ALLOWED_ORIGINS
-        value: https://api-performance-monitor.vercel.app
+        value: https://api-performance-monitor-one.vercel.app

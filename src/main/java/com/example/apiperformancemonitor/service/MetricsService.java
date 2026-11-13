@@ -84,6 +84,8 @@ public class MetricsService {
 
                 if (method == null || uri == null) return;
                 if (uri.startsWith("/actuator")) return;
+                // Unmatched routes (bots probing /wp-login.php, /.env, ...) all collapse into these tags.
+                if (uri.equals("/**") || uri.equals("UNKNOWN")) return;
 
                 String key = method + " " + uri;
 
