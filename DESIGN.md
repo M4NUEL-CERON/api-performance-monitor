@@ -113,7 +113,7 @@ components:
 
 **Creative North Star: "The Night Line"**
 
-The dashboard is a transit map read at night. A dark street ground, a cobalt band across the top like a station canopy, and one sodium lamp that marks whatever matters or can be pressed. Each endpoint is a line on a log-scale rail from 1 ms to 2 s, and its percentiles are stations along it: p50 a hollow silver ring, p99 a lit sodium stop, p99.5 a window-blue stem rising off the rail. The numbers are what the server measures about itself, so the surface stays quiet and lets them move.
+The dashboard is a transit map read at night. A dark street ground, a cobalt band across the top like a station canopy, and one sodium lamp that marks whatever matters or can be pressed. Each endpoint is a line on a log-scale rail from 1 ms to 5 s, and its percentiles are stations along it: p50 a hollow silver ring, p99 a lit sodium stop, p99.5 a window-blue stem rising off the rail. The numbers are what the server measures about itself, so the surface stays quiet and lets them move.
 
 It belongs to the same family as the author's portfolio world ("Night Transit": same night/cobalt/sodium/window/silver palette, Big Shoulders caps over Overpass) without copying it. What this build adds is the instrument: a single scrolling page of flat horizontal bands split by 1px rules, tabular numerals everywhere, and a signature latency line instead of KPI cards. Density is medium-high and calm; motion is limited to stations gliding on each 2 s poll, a pulsing live dot, and a skeleton shimmer, all removed under reduced motion.
 
@@ -230,7 +230,7 @@ A 0.5rem street track with an inset rule ring and a flat fill that eases its wid
 Rules only, no zebra or cards. Method in muted 0.7rem bold caps before the URI; a muted note under endpoints with simulated latency. Numbers right-aligned; the p99 column is sodium 600. Status codes inline: 2xx lamplit, 4xx sodium, 5xx coral, counts muted. Row hover (pointer devices only) fills street.
 
 ### Latency Line (signature)
-A log-scale rail from 1 ms to 2 s: 2px rule-coloured rail, 1px ticks at the SLO buckets (50, 100, 200, 500 ms, 1 s) with 0.625rem labels, end labels "1 ms" and "2 s". A silver 2px span joins p50 to p99.5. Stations: p50 a 0.8rem hollow silver ring (night fill, 2px inset), p99 a 0.95rem sodium disc with night gap ring and glow, p99.5 a window-blue stem with round head. Stations glide over 200ms on the house ease on each poll. With no samples in the window the rail turns dashed and reads "No requests in the last 2 min". The line carries an `aria-label` with all three values; the legend above the table repeats the station shapes.
+A log-scale rail from 1 ms to 5 s: 2px rule-coloured rail, 1px ticks at the SLO buckets (50, 100, 200, 500 ms, 1 s) with 0.625rem labels, end labels "1 ms" and "5 s". A silver 2px span joins p50 to p99.5. Stations: p50 a 0.8rem hollow silver ring (night fill, 2px inset), p99 a 0.95rem sodium disc with night gap ring and glow, p99.5 a window-blue stem with round head. Stations glide over 200ms on the house ease on each poll. With no samples in the window the rail turns dashed and reads "No requests in the last 2 min". The line carries an `aria-label` with all three values; the legend above the table repeats the station shapes.
 
 ### RPS Chart
 An SVG area chart, 10rem tall, bottom rule, dashed (2 4) rule-coloured gridlines, window-blue 2px line over a 14% window-blue fill. Y labels and the caption in muted small caps.

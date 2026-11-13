@@ -349,7 +349,7 @@ function EndpointTable({ endpoints }: { endpoints?: EndpointMetrics[] }) {
   )
 }
 
-const LOG_MAX_MS = 2000
+const LOG_MAX_MS = 5000 // cold JIT on the free tier pushes the first run past 2 s
 const TICKS: [number, string][] = [[50, '50'], [100, '100'], [200, '200'], [500, '500'], [1000, '1 s']]
 const pos = (msVal: number) => (Math.log10(Math.min(Math.max(msVal, 1), LOG_MAX_MS)) / Math.log10(LOG_MAX_MS)) * 100
 
@@ -374,7 +374,7 @@ function LatencyLine({ e }: { e: EndpointMetrics }) {
         </span>
       ))}
       <span className="line-end line-end-start">1 ms</span>
-      <span className="line-end line-end-stop">2 s</span>
+      <span className="line-end line-end-stop">5 s</span>
       <div className="line-span" style={{ left: `${a}%`, width: `${Math.max(b - a, 0)}%` }} />
       <span className="station station-p50" style={{ left: `${a}%` }} />
       <span className="station station-p995" style={{ left: `${b}%` }} />
