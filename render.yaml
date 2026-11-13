@@ -1,0 +1,10 @@
+# Render Blueprint: New > Blueprint > pick this repo.
+services:
+  - type: web
+    name: api-performance-monitor
+    runtime: docker
+    plan: free
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: CORS_ALLOWED_ORIGINS
+        value: https://api-performance-monitor.vercel.app
