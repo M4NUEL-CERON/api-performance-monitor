@@ -1,0 +1,143 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-13T00:00:00Z",
+  "title": "Design System: API Performance Monitor",
+  "extensions": {
+    "colorMeta": {
+      "night": { "role": "neutral", "displayName": "Night Ground", "canonical": "oklch(16.8% 0.016 261)", "tonalRamp": ["#090b0e", "#22252a", "#3e4249", "#5d6169", "#7d838c", "#a0a5ae", "#c5c9d1", "#ebeff5"] },
+      "cobalt": { "role": "neutral", "displayName": "Cobalt Canopy", "canonical": "oklch(23.6% 0.066 260)", "tonalRamp": ["#040b18", "#192539", "#33425c", "#4e6283", "#6b83aa", "#91a6c9", "#b7cae9", "#e0f0ff"] },
+      "street": { "role": "neutral", "displayName": "Street Layer", "canonical": "oklch(20.9% 0.030 264)", "tonalRamp": ["#080b11", "#20252e", "#3c424e", "#5a6171", "#798395", "#9da5b6", "#c2c9d8", "#e8effb"] },
+      "tower": { "role": "neutral", "displayName": "Tower Ink", "canonical": "oklch(14.4% 0.014 262)", "tonalRamp": ["#0a0b0e", "#232529", "#3f4248", "#5d6169", "#7e838b", "#a1a5ad", "#c5c9d0", "#ebeff4"] },
+      "rule": { "role": "neutral", "displayName": "Rail Rule", "canonical": "oklch(31.0% 0.049 263)", "tonalRamp": ["#060b15", "#1d2534", "#384256", "#54617a", "#7383a0", "#97a6c0", "#bdcae1", "#e4efff"] },
+      "sodium": { "role": "primary", "displayName": "Sodium Lamp", "canonical": "oklch(82.4% 0.163 78)", "tonalRamp": ["#1c0400", "#3e1b00", "#643600", "#8c5300", "#b67200", "#d59825", "#f4bf6b", "#ffe7a4"] },
+      "window": { "role": "secondary", "displayName": "Window Light", "canonical": "oklch(72.8% 0.140 265)", "tonalRamp": ["#010727", "#10214e", "#263e79", "#3e5da6", "#587ed5", "#80a3f1", "#a9c9ff", "#d3efff"] },
+      "silver": { "role": "secondary", "displayName": "Facade Silver", "canonical": "oklch(87.9% 0.010 267)", "tonalRamp": ["#0a0b0d", "#242528", "#404246", "#5f6166", "#808289", "#a2a5ab", "#c7c9ce", "#edeef3"] },
+      "text": { "role": "neutral", "displayName": "Platform White", "canonical": "oklch(94.0% 0.007 269)", "tonalRamp": ["#0a0b0d", "#242527", "#414245", "#606165", "#808287", "#a3a5a9", "#c8c9cc", "#edeef1"] },
+      "lamplit": { "role": "neutral", "displayName": "Lamplit Grey", "canonical": "oklch(83.7% 0.018 261)", "tonalRamp": ["#090b0f", "#22252b", "#3e4249", "#5c616b", "#7c838e", "#a0a5af", "#c4c9d2", "#eaeff6"] },
+      "muted": { "role": "neutral", "displayName": "Muted Steel", "canonical": "oklch(72.2% 0.032 261)", "tonalRamp": ["#080b12", "#20252f", "#3b424f", "#586272", "#788396", "#9ba6b7", "#c1cad9", "#e7effc"] },
+      "bad": { "role": "tertiary", "displayName": "Warning Coral", "canonical": "oklch(73.2% 0.165 28)", "tonalRamp": ["#230000", "#4b0504", "#761e18", "#a3372e", "#d25347", "#f17f71", "#ffab9d", "#ffd6ca"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "The current requests-per-second numeral; 4rem at <=720px." },
+      "headline": { "displayName": "Headline", "purpose": "Cold start and offline messages that replace the RPS block. Uppercase." },
+      "title": { "displayName": "Title", "purpose": "Product name in the top bar. Uppercase." },
+      "section": { "displayName": "Section", "purpose": "Band headings in silver. Uppercase." },
+      "readout": { "displayName": "Readout", "purpose": "JVM values." },
+      "body": { "displayName": "Body", "purpose": "Copy and table cells; long copy capped at 65-75ch." },
+      "label": { "displayName": "Label", "purpose": "Uppercase muted table headers and JVM terms; nav and status use 0.75rem / 0.18em." }
+    },
+    "shadows": [
+      { "name": "lamp-glow-station", "value": "0 0 0 3px var(--night), 0 0 0.75rem rgb(255 182 39 / 0.45)", "purpose": "p99 station: night gap ring plus sodium glow; the ring becomes --street on row hover." },
+      { "name": "lamp-glow-dot", "value": "0 0 0.6rem rgb(255 182 39 / 0.7)", "purpose": "Live status dot." },
+      { "name": "lamp-glow-button", "value": "0 0.4rem 1.5rem rgb(255 182 39 / 0.35)", "purpose": "Primary button hover, with a 1px lift." },
+      { "name": "rule-ring", "value": "inset 0 0 0 1px var(--rule)", "purpose": "Stroke on meter tracks and the disabled button; not elevation." }
+    ],
+    "motion": [
+      { "name": "ease", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "House ease-out for station glide, meter fill, button lift and the live pulse." },
+      { "name": "glide", "value": "200ms", "purpose": "Stations, latency span and meter fills moving to new values on each 2 s poll." },
+      { "name": "hover", "value": "150ms", "purpose": "Link colour, row hover, button background." },
+      { "name": "pulse-live", "value": "2s", "purpose": "Live status dot opacity pulse." },
+      { "name": "pulse-waiting", "value": "1s ease-in-out", "purpose": "Connecting / waking / reconnecting status dot." },
+      { "name": "shimmer", "value": "1.6s linear", "purpose": "Skeleton loading blocks." },
+      { "name": "reduced-motion", "value": "none", "purpose": "All animations and transitions removed under prefers-reduced-motion." }
+    ],
+    "breakpoints": [
+      { "name": "stack", "value": "960px" },
+      { "name": "compact", "value": "720px" },
+      { "name": "min", "value": "320px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The single action, Generate traffic: sodium, square, Big Shoulders caps.",
+      "html": "<button type=\"button\" class=\"ds-btn-primary\">Generate traffic</button>",
+      "css": ".ds-btn-primary { font-family: var(--display); font-size: 1.5rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--tower); background: var(--sodium); border: 0; border-radius: 0; padding: 0.95rem 1.4rem 0.8rem; cursor: pointer; transition: background 150ms, box-shadow 200ms var(--ease), transform 150ms var(--ease); } .ds-btn-primary:hover { box-shadow: 0 0.4rem 1.5rem rgb(255 182 39 / 0.35); transform: translateY(-1px); } .ds-btn-primary:active { transform: translateY(1px); box-shadow: none; } .ds-btn-primary:focus-visible { outline: 2px solid var(--sodium); outline-offset: 3px; }"
+    },
+    {
+      "name": "Primary Button Disabled",
+      "kind": "button",
+      "refersTo": "button-primary-disabled",
+      "description": "Disabled while the API is unreachable or a run is in progress.",
+      "html": "<button type=\"button\" class=\"ds-btn-primary-disabled\" disabled>Generate traffic</button>",
+      "css": ".ds-btn-primary-disabled { font-family: var(--display); font-size: 1.5rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); background: var(--street); border: 0; border-radius: 0; padding: 0.95rem 1.4rem 0.8rem; cursor: not-allowed; box-shadow: inset 0 0 0 1px var(--rule); }"
+    },
+    {
+      "name": "Top Bar",
+      "kind": "nav",
+      "refersTo": "topbar",
+      "description": "Cobalt canopy with title, live status and uppercase nav links.",
+      "html": "<header class=\"ds-topbar\"><h1 class=\"ds-topbar-title\">API Performance Monitor</h1><p class=\"ds-status\"><span class=\"ds-status-dot\"></span>Live · every 2 s</p><nav class=\"ds-nav\"><a href=\"#\">GitHub</a><a href=\"#\">Prometheus</a></nav></header>",
+      "css": ".ds-topbar { display: flex; align-items: center; gap: 1rem 2rem; flex-wrap: wrap; padding: 1.1rem var(--gutter) 1rem; background: var(--cobalt); border-bottom: 1px solid var(--rule); } .ds-topbar-title { margin: 0 auto 0 0; font-family: var(--display); font-size: 1.75rem; font-weight: 700; letter-spacing: 0.04em; line-height: 1; text-transform: uppercase; color: var(--text); } .ds-status { margin: 0; display: inline-flex; align-items: center; gap: 0.55rem; font-family: var(--body); font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--lamplit); } .ds-status-dot { width: 0.6rem; height: 0.6rem; border-radius: 50%; background: var(--sodium); box-shadow: 0 0 0.6rem rgb(255 182 39 / 0.7); } .ds-nav { display: flex; gap: 1.5rem; } .ds-nav a { font-family: var(--body); font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--lamplit); text-decoration: none; transition: color 150ms; } .ds-nav a:hover { color: var(--sodium); } .ds-nav a:focus-visible { outline: 2px solid var(--sodium); outline-offset: 3px; }"
+    },
+    {
+      "name": "Meter",
+      "kind": "custom",
+      "refersTo": "meter",
+      "description": "Square progress track: sodium for user-driven progress, window blue for measured data.",
+      "html": "<div class=\"ds-meter\"><span class=\"ds-meter-fill\" style=\"width:62%\"></span></div><div class=\"ds-meter ds-meter-thin\"><span class=\"ds-meter-fill ds-meter-fill-data\" style=\"width:38%\"></span></div>",
+      "css": ".ds-meter { display: block; height: 0.5rem; background: var(--street); box-shadow: inset 0 0 0 1px var(--rule); } .ds-meter-fill { display: block; height: 100%; background: var(--sodium); transition: width 200ms var(--ease); } .ds-meter-thin { height: 0.3rem; margin-top: 0.75rem; } .ds-meter-fill-data { background: var(--window); }"
+    },
+    {
+      "name": "Latency Line",
+      "kind": "custom",
+      "refersTo": "station-p99",
+      "description": "Signature: log-scale rail 1 ms to 2 s, SLO-bucket ticks, p50 ring, p99 sodium stop, p99.5 window-blue stem.",
+      "html": "<div class=\"ds-line\"><div class=\"ds-line-rail\"></div><span class=\"ds-line-tick\" style=\"left:51.5%\"><span class=\"ds-line-tick-label\">50</span></span><span class=\"ds-line-tick\" style=\"left:60.6%\"><span class=\"ds-line-tick-label\">100</span></span><span class=\"ds-line-tick\" style=\"left:69.7%\"><span class=\"ds-line-tick-label\">200</span></span><span class=\"ds-line-tick\" style=\"left:81.8%\"><span class=\"ds-line-tick-label\">500</span></span><span class=\"ds-line-tick\" style=\"left:90.9%\"><span class=\"ds-line-tick-label\">1 s</span></span><span class=\"ds-line-end ds-line-end-start\">1 ms</span><span class=\"ds-line-end ds-line-end-stop\">2 s</span><div class=\"ds-line-span\" style=\"left:20%;width:68%\"></div><span class=\"ds-station ds-station-p50\" style=\"left:20%\"></span><span class=\"ds-station ds-station-p995\" style=\"left:88%\"></span><span class=\"ds-station ds-station-p99\" style=\"left:84%\"></span></div>",
+      "css": ".ds-line { position: relative; height: 2.6rem; min-width: 14rem; font-family: var(--body); } .ds-line-rail { position: absolute; left: 0; right: 0; top: 0.75rem; height: 2px; background: var(--rule); } .ds-line-span { position: absolute; top: 0.75rem; height: 2px; background: var(--silver); transition: left 200ms var(--ease), width 200ms var(--ease); } .ds-line-tick { position: absolute; top: 0.5rem; width: 1px; height: 0.6rem; background: var(--rule); } .ds-line-tick-label { position: absolute; top: 1.05rem; left: 50%; transform: translateX(-50%); font-size: 0.625rem; color: var(--muted); white-space: nowrap; } .ds-line-end { position: absolute; top: 1.55rem; font-size: 0.625rem; color: var(--muted); } .ds-line-end-start { left: 0; } .ds-line-end-stop { right: 0; } .ds-station { position: absolute; top: calc(0.75rem + 1px); width: 0.8rem; height: 0.8rem; border-radius: 50%; transform: translate(-50%, -50%); transition: left 200ms var(--ease); } .ds-station-p50 { background: var(--night); box-shadow: inset 0 0 0 2px var(--silver); } .ds-station-p995 { width: 3px; height: 1.15rem; border-radius: 0; background: var(--window); transform: translate(-50%, -100%); } .ds-station-p995::after { content: ''; position: absolute; left: 50%; top: 0; width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--window); transform: translate(-50%, -50%); } .ds-station-p99 { background: var(--sodium); width: 0.95rem; height: 0.95rem; box-shadow: 0 0 0 3px var(--night), 0 0 0.75rem rgb(255 182 39 / 0.45); }"
+    },
+    {
+      "name": "Endpoint Row",
+      "kind": "custom",
+      "refersTo": "endpoint-row-hover",
+      "description": "Rule-divided table row: method and URI, simulated-latency note, right-aligned numbers, sodium p99, coloured status codes.",
+      "html": "<table class=\"ds-endpoints\"><thead><tr><th>Endpoint</th><th class=\"ds-num\">Req</th><th class=\"ds-num\">p50</th><th class=\"ds-num\">p99</th><th>Status</th></tr></thead><tbody><tr><th scope=\"row\"><span class=\"ds-ep-method\">GET</span> <span class=\"ds-ep-uri\">/api/transactions/report</span><span class=\"ds-ep-note\">Simulated tail latency</span></th><td class=\"ds-num\">1,204</td><td class=\"ds-num\">12 ms</td><td class=\"ds-num ds-p99\">1.4 s</td><td><span class=\"ds-code\">200<span class=\"ds-code-n\"> ×1,150</span></span><span class=\"ds-code ds-code-4xx\">404<span class=\"ds-code-n\"> ×54</span></span></td></tr></tbody></table>",
+      "css": ".ds-endpoints { width: 100%; border-collapse: collapse; font-family: var(--body); color: var(--text); font-variant-numeric: tabular-nums; } .ds-endpoints thead th { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); text-align: left; padding: 0 0.75rem 0.6rem; border-bottom: 1px solid var(--rule); } .ds-endpoints td, .ds-endpoints tbody th { padding: 0.95rem 0.75rem; border-bottom: 1px solid var(--rule); text-align: left; font-weight: 400; } .ds-endpoints tbody tr { transition: background 150ms; } .ds-endpoints tbody tr:hover { background: var(--street); } .ds-num { text-align: right !important; white-space: nowrap; } .ds-p99 { color: var(--sodium); font-weight: 600; } .ds-ep-method { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; color: var(--muted); } .ds-ep-note { display: block; font-size: 0.8125rem; color: var(--muted); margin-top: 0.2rem; } .ds-code { margin-right: 0.6rem; font-size: 0.875rem; color: var(--lamplit); } .ds-code-n { color: var(--muted); } .ds-code-4xx { color: var(--sodium); } .ds-code-5xx { color: var(--bad); }"
+    },
+    {
+      "name": "JVM Stat",
+      "kind": "card",
+      "refersTo": "meter-fill-data",
+      "description": "Definition-list readout topped by a 1px rule; no card background.",
+      "html": "<dl class=\"ds-jvm\"><div><dt>Process CPU</dt><dd>3.2%</dd></div><div><dt>Heap</dt><dd>84 <span class=\"ds-unit\">/ 256 MB</span></dd></div><div><dt>Uptime</dt><dd>2 h 14 m</dd></div></dl>",
+      "css": ".ds-jvm { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem 2rem; margin: 0; font-family: var(--body); font-variant-numeric: tabular-nums; } .ds-jvm > div { border-top: 1px solid var(--rule); padding-top: 0.75rem; } .ds-jvm dt { font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.3rem; } .ds-jvm dd { margin: 0; font-size: 1.5rem; color: var(--text); } .ds-unit { color: var(--muted); font-size: 0.8em; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Night Line",
+    "overview": "The dashboard is a transit map read at night. A dark street ground, a cobalt band across the top like a station canopy, and one sodium lamp that marks whatever matters or can be pressed. Each endpoint is a line on a log-scale rail from 1 ms to 2 s, and its percentiles are stations along it: p50 a hollow silver ring, p99 a lit sodium stop, p99.5 a window-blue stem rising off the rail. The numbers are what the server measures about itself, so the surface stays quiet and lets them move.\n\nIt belongs to the same family as the author's portfolio world (\"Night Transit\": same night/cobalt/sodium/window/silver palette, Big Shoulders caps over Overpass) without copying it. What this build adds is the instrument: a single scrolling page of flat horizontal bands split by 1px rules, tabular numerals everywhere, and a signature latency line instead of KPI cards. Density is medium-high and calm; motion is limited to stations gliding on each 2 s poll, a pulsing live dot, and a skeleton shimmer, all removed under reduced motion.\n\nThe confirmed rejection is the admin template: no hero-metric-plus-card-grid, no rounded panels, no decorative charts.",
+    "keyCharacteristics": [
+      "Dark only (`color-scheme: dark`), night ground with a cobalt top band.",
+      "One sodium accent for action and emphasis; window blue and silver for data.",
+      "Big Shoulders uppercase for headings and the big readouts; Overpass with tabular numerals for everything else.",
+      "Flat bands divided by 1px rules; no cards, no container backgrounds.",
+      "Square corners everywhere except the round stations and the status dot.",
+      "The latency line is the signature: log rail, SLO-bucket ticks, three percentile stations."
+    ],
+    "rules": [
+      { "name": "The One Lamp Rule", "body": "Sodium is the only colour that means \"press this\" or \"look here\". If a new element is clickable, focused or the headline number in its row, it is sodium; nothing else competes for that job.", "section": "colors" },
+      { "name": "The Data Light Rule", "body": "Window blue and silver mark measured values and the server's own process state. They never fill a button, link or focus state.", "section": "colors" },
+      { "name": "The Caps Signage Rule", "body": "Every Big Shoulders setting is uppercase. Thin (300) for the large readouts and full-state messages, heavy (600–700) for anything that names a thing (product, section, button).", "section": "typography" },
+      { "name": "The Tabular Rule", "body": "Numerals are tabular everywhere (`font-variant-numeric: tabular-nums` on `:root`). Units sit beside numbers in muted at 0.8em.", "section": "typography" },
+      { "name": "The Only Light Glows Rule", "body": "A blurred shadow exists only where sodium light is emitted. Neutral surfaces never get drop shadows.", "section": "elevation" }
+    ],
+    "dos": [
+      "**Do** keep sodium (#ffb627) as the single action and emphasis colour: one button, the p99 station and column, focus, selection, live dot.",
+      "**Do** split content into full-width bands with 1px rule dividers and the fluid gutter (`clamp(1rem, 4vw, 3rem)`).",
+      "**Do** set every Big Shoulders heading in uppercase: thin 300 for big readouts, 600–700 for names.",
+      "**Do** keep numerals tabular and units muted at 0.8em.",
+      "**Do** use round shapes only for stations and status dots; everything else stays square.",
+      "**Do** ease movement with `cubic-bezier(0.16, 1, 0.3, 1)` at 150–200ms, and drop all animation under `prefers-reduced-motion`.",
+      "**Do** label simulated latency and make cold start, offline, empty and loading states explicit."
+    ],
+    "donts": [
+      "**Don't** build KPI cards, rounded panels, or a hero-metric-plus-card-grid layout.",
+      "**Don't** use window blue or silver for buttons, links, focus or selection.",
+      "**Don't** add drop shadows to neutral surfaces; only sodium elements glow.",
+      "**Don't** set Big Shoulders in sentence case or use it for body copy.",
+      "**Don't** round the corners of buttons, meters, tables or bands."
+    ]
+  }
+}
